@@ -1,0 +1,15 @@
+Reference: https://askubuntu.com/a/396906
+
+If you only want to convert MKV to MP4 then you will save quality and a lot of time by just changing the containers. Both of these are just wrappers over the same content so the CPU only needs to do a little work. Don't re encode as you will definitely lose quality.
+
+It's very straight forward using ffmpeg:
+
+ffmpeg -i LostInTranslation.mkv -codec copy LostInTranslation.mp4
+Here, you are copying the video codec and audio codec so nothing is being encoded.
+
+Tip: To convert all MKV files in the current directory, run a simple loop in terminal:
+
+for i in *.mkv; do
+    ffmpeg -i "$i" -codec copy "${i%.*}.mp4"
+done
+For future conversions, like from AVI to MP4, check out HandBrake.
