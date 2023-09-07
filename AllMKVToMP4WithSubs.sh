@@ -12,12 +12,11 @@ if [[ $REPLY =~ ^[Yy]$ ]]
     clear
     for i in *.mkv; do
         echo "- Converting $i... -"
-        ffmpeg -i "$i" -vcodec h264_videotoolbox -acodec copy -b:v 3000k "${i%.*}.mp4"  -v quiet -stats
+        ffmpeg-bar -i "$i" -vcodec h264_videotoolbox -acodec aac -b:v 2500k "${i%.*}_h264.mkv"
+        echo "- Extracting subs for $i... -"
+        ffmpeg-bar -i "$i" -map "0:m:language:eng" -map "-0:v" -map "-0:a" "${i%.*}.srt"
         # ffmpeg -i "$i" -codec copy "${i%.*}.mp4"  -v quiet -stats
 
-
-        echo "- Deleting $i... -"
-        rm "$i"
 
         echo "- $i Complete -"
         echo
